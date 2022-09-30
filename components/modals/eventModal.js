@@ -66,7 +66,7 @@ const EventModal = ({
       <Modal
         title="Add an Event"
         opened={isModalVisible}
-        handleClose={handleClose}
+        onClose={handleClose}
         closeOnClickOutside={false}
       >
         <form
