@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const environment = process.env.NODE_ENV || "development";
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -13,8 +16,8 @@ const nextConfig = {
   },
   apiUrl: {
     development: "http://localhost:3005",
-    // production: "https://events-app-2021.herokuapp.com",
-  }[process.env.NODE_ENV],
+    production: "https://events-api-t.herokuapp.com",
+  }[environment],
 };
 
 module.exports = nextConfig;
