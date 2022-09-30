@@ -32,15 +32,9 @@ const Sidebar = () => {
     >
       {sidebarData.map((item) => {
         return (
-          <Navbar.Section>
+          <Navbar.Section key={item.title}>
             <Group>
-              <UnstyledButton
-                key={item.title}
-                component="a"
-                href={item.link}
-                color="gray"
-                fullWidth
-              >
+              <UnstyledButton component="a" href={item.link} color="gray">
                 <Text size="md" color="black" align="start">
                   {item.icon}
                   {width > 768 && item.title}

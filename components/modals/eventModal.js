@@ -1,10 +1,10 @@
-import { Modal, TextInput, Button, Group } from "@mantine/core";
-
+import { Modal, TextInput, Button, Group, MultiSelect } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
+import { useQuery } from "react-query";
 
 import { addEvent, updateEvent, deleteEvent } from "../../functions/events";
 import { showNotification } from "@mantine/notifications";
-
+import { getUsers } from "../../functions/user";
 const EventModal = ({
   isModalVisible,
   setIsModalVisible,
@@ -14,11 +14,23 @@ const EventModal = ({
   reset,
   values,
   refetch,
+  setValues,
 }) => {
+  const {
+    data: users = [],
+    isLoading,
+    error,
+  } = useQuery("users", async () => await getUsers());
+
+  const aggregatedUsers = users.map((user) => ({
+    label: user.username,
+    value: user._id,
+  }));
   const handleSubmit = async (data) => {
     try {
       if (data._id && data._id !== "") {
         const res = await updateEvent(data._id, data);
+
         showNotification({
           title: "Success",
           message: `Event has been updated`,
@@ -61,6 +73,7 @@ const EventModal = ({
     refetch();
     handleClose();
   };
+
   return (
     <>
       <Modal
@@ -78,7 +91,7 @@ const EventModal = ({
             withAsterisk
             label="Title"
             {...getInputProps("title")}
-            clearable
+            clearable={true}
           />
           <TextInput
             withAsterisk
@@ -98,12 +111,12 @@ const EventModal = ({
             {...getInputProps("end")}
           />
           <DatePicker label=" Date" clearable {...getInputProps("date")} />
-          {/* <Group mt="md">
-            <label htmlFor="start">Start</label>
-            <input type="datetime" {...getInputProps("start")} />
-            <label htmlFor="end">End</label>
-            <input type="time" {...getInputProps("end")} />
-          </Group> */}
+
+          <MultiSelect
+            label="Users"
+            data={aggregatedUsers}
+            {...getInputProps("users")}
+          />
 
           <Group position="apart" mt="sm">
             <Button color="red" onClick={() => onDelete(values._id)}>

@@ -26,6 +26,7 @@ const Events = () => {
         start: new Date(),
         end: new Date(),
         date: new Date(),
+        users: [],
       },
     }
   );

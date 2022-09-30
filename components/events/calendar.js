@@ -23,6 +23,7 @@ const CalendarView = (props) => {
         date: new Date(values.date),
         start: new Date(values.start),
         end: new Date(values.end),
+        users: values.users.map((user) => user._id),
       });
     };
 
