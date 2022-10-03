@@ -46,7 +46,7 @@ export const updateEvent = async (id, event) => {
 
     return await res.json();
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
